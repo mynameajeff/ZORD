@@ -1,5 +1,6 @@
 
-# this procedure allows me to color the text.
+# color procedure courtesy of Donal Fellows
+#stackoverflow.com/questions/25519393/how-to-change-color-text-using-puts-in-tcl
 proc color {foreground text} {
     # tput is a little Unix utility that lets you use the termcap database
     # *much* more easily...
