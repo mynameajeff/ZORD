@@ -6,9 +6,7 @@ set player(sp_max) 15
 set player(xp_max) 25
 
 set player(hp) [randint 5 25]
-
 set player(sp) [randint 5 15]
-
 set player(xp) 0
 
 set player(level) 0
