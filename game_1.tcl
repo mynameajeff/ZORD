@@ -50,13 +50,11 @@ while {!$class_chosen} {
     switch $player(class) {
 
         MAGE {
-            puts "You're a MAGE now!"
             set player(class) [color 5 $player(class)]
             set class_chosen 1
         }
 
         WARRIOR {
-            puts "You're a WARRIOR now!"
             set player(class) [color 9 $player(class)]
             set class_chosen 1
         }
@@ -65,6 +63,8 @@ while {!$class_chosen} {
             puts "invalid."
         }
     }
+
+    puts "You're a $player(class) now!"
 }
 
 
