@@ -1,4 +1,6 @@
 
+source "procs2.tcl"
+
 # color procedure courtesy of Donal Fellows
 #stackoverflow.com/questions/25519393/how-to-change-color-text-using-puts-in-tcl
 proc color {foreground text} {
@@ -49,22 +51,27 @@ proc show_stats {} {
 
 }
 
+# this procedure returns a string detailling the contents of the players inventory.
 proc get_inventory {} {
 
     global player
-    global player_inv
 
-    if {$player(inv_count) < 1} {
+    set inv [color 4 INVENTORY]
+
+    if {[llength $player(inv)] < 1} {
     
-        return "There are no items in your inventory."
+        return "\nThere are no items in your $inv."
     
     } else {
 
-        set return_val "\nINVENTORY:\n"
+        set return_val "\n$inv:\n"
 
-        for {set index 0} {$index < [llength $player_inv]} {incr index} {
+        for {set index 0} {$index < [llength $player(inv)]} {incr index} {
 
-            append return_val [format "· %s\n" [lindex $player_inv $index]]
+            append return_val [format "· \[%s\] %s\n" \
+                [color 3 $index] \
+                [lindex $player(inv) $index] \
+            ]
         } 
 
         return [string trimright $return_val "\n"]
