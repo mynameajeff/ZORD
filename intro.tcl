@@ -5,11 +5,11 @@ set NEXT_PART "game_1.tcl"
 
 source $NEEDED
 
-puts "\nWelcome to the [color 5 Z][color 3 0][color 11 R][color 2 D] RPG!"
-puts "do you want to:"
-puts "[color 3 1]) Play the game"
-puts "[color 3 2]) Learn some info"
-puts "[color 3 3]) Leave this crappy game"
+puts "\nWelcome to the [color 5 Z][color 135 0][color 141 R][color 147 D] RPG!\n"
+
+puts "\[[color 3 1]\] play the game"
+puts "\[[color 3 2]\] information about the game"
+puts "\[[color 3 3]\] exit the game"
 
 set s_choice_0 0 ;# to begin the loop
 
@@ -26,7 +26,6 @@ while {$s_choice_0 != 1} {
         }
 
         2 {
-            set s_choice_0 0
             puts "This game was designed by [color 3 mynameajeff] in a few days to test Tcl w/ Python."
             puts "It contains examples of various features of the language being used."
 
@@ -52,7 +51,6 @@ while {$s_choice_0 != 1} {
 
         default {
             puts "incorrect choice."
-            set s_choice_0 0
         }
     }
 
