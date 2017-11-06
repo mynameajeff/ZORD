@@ -6,16 +6,34 @@ set player(sp_max) 15
 set player(xp_max) 25
 
 set player(hp) [randint 5 25]
+
 set player(sp) [randint 5 15]
+
 set player(xp) 0
 
 set player(level) 0
 
 set player(sta) 10
 
-set player_inv [list Basic\ short-sword Bread]
+set player(equipped?) [list 0]
+set player(inv) [list Bread]
 
-set player(inv_count) [string length player_inv]
+#~~~~~~~~~~~~~
+
+set master_inv \
+    [dict create \
+        Bread "Food made of flour, water, and yeast mixed together and baked.\n\t+10 HP." \
+        BASIC\ Weak-Wand "The Beginning [color 5 MAGE]'s magical weapon of choice." \
+        BASIC\ Short-Sword "The Beginning [color 9 WARRIOR]'s sharp weapon of choice." \
+    ]
+
+set master_inv_type \
+    [dict create \
+        Bread "FOOD" \
+        BASIC\ Weak-Wand "WEAPON" \
+        BASIC\ Short-Sword "WEAPON" \
+    ]
+
 #~~~~~~~~~~~~~
 
 set name_given 0
@@ -48,23 +66,34 @@ while {!$class_chosen} {
     switch $player(class) {
 
         MAGE {
+
             set player(class) [color 5 $player(class)]
+            
+            set player(inv) [linsert $player(inv) 0 BASIC\ Weak-Wand]
+            # set player(inv) [linsert $player(inv) 1 BASIC\ Short-Sword] ;#just for testing purposes.
+            
+            lappend player(equipped?) BASIC\ Weak-Wand    
+
             set class_chosen 1
         }
 
         WARRIOR {
+
             set player(class) [color 9 $player(class)]
+
+            set player(inv) [linsert $player(inv) 0 BASIC\ Short-Sword]
+            
+            lappend player(equipped?) BASIC\ Short-Sword
+            
             set class_chosen 1
         }
 
         default {
+
             puts "invalid."
         }
     }
-
-    puts "You're a $player(class) now!"
 }
-
 
 set main_loop_broken 0
 
@@ -95,11 +124,14 @@ while {!$main_loop_broken} {
         }
 
         CHECK {
-            puts [get_inventory]
+            
+            check_choice
+
         }
+
     }
 
-    if {$player(hp) == 0} {
+    if {!$player(hp)} {
         # set main_loop_broken 1 ;# in other words, game over!
         exit
     }
