@@ -1,0 +1,71 @@
+
+import random
+
+from helper_functions import *
+import item
+
+class Player:
+
+    def __init__(self, name, player_class):
+
+        self.name = name
+        self.player_class = player_class
+
+        HP_MAX = 25
+        SP_MAX = 15
+
+        if player_class == color(5, "MAGE"):
+            spm = 5
+            sta = 0
+
+        elif player_class == color(9, "WARRIOR"):
+            sta = 5
+            spm = 0
+
+        self.hp = [random.randint(5, HP_MAX), HP_MAX]
+        self.sp = [random.randint(5, SP_MAX + spm), SP_MAX + spm]
+        
+        self.xp = (0, 25)
+        self.level = 0
+
+        self.st = (10 + sta, 10 + sta)
+
+        self.equipped = None
+
+        self.inventory = [item.Item("Bread")]
+
+    def get_stats(self):
+
+        print("\033c") # this clears the screen.
+
+        print("NAME: \"%s the %s\", LVL: %d" %
+            (self.name, self.player_class, self.level))
+
+        print("HP:   %.2d/%d, XP: %d/%d" %
+            (self.hp[0], self.hp[1], self.xp[0], self.xp[1]))
+
+        print("SP:   %.2d/%d, ST: %d/%d" %
+            (self.sp[0], self.sp[1], self.st[0], self.st[1]))
+
+    def get_inventory(self):
+
+        inv = color(4, "INVENTORY")
+        inv_len = len(self.inventory)
+
+        if inv_len >= 1:
+
+            return_value = "\033c\n%s:\n" % inv
+
+            i = 0
+
+            while i < inv_len:
+
+                return_value += ("· [%s] %s\n" % (color(3, str(i)), self.inventory[i].name))
+
+                i += 1
+
+            return return_value.rstrip("\n")
+
+        else:
+
+            return "\nThere are no items in your %s." % inv
