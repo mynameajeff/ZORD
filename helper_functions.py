@@ -1,10 +1,22 @@
 
-from curses import tparm, tigetstr
-import curses
+import os
 
-curses.setupterm()
+if os.name == "posix":
 
-def color(foreground, text):
+    from curses import tparm, tigetstr
+    import curses
 
-    return tparm(tigetstr('setaf'), foreground).decode("utf-8") + \
-            text + tigetstr("sgr0").decode("utf-8")
+    try:
+        curses.setupterm()
+    except curses.error:
+        print("ERROR: CURSES FAILED, must be run in a valid terminal.")
+
+    def color(foreground, text):
+        return tparm(tigetstr('setaf'), foreground).decode("utf-8") + \
+                text + tigetstr("sgr0").decode("utf-8")
+
+else:
+
+    def color(foreground, text):
+        return text
+
