@@ -1,5 +1,5 @@
 
-import os
+import os, sys
 
 if os.name == "posix":
 
@@ -10,6 +10,10 @@ if os.name == "posix":
         curses.setupterm()
     except curses.error:
         print("ERROR: CURSES FAILED, must be run in a valid terminal.")
+        sys.exit()
+
+    # this clears the terminal, however it's only been tested to work on linux.
+    CLEAR_SCR = "\033c"
 
     def color(foreground, text):
         return tparm(tigetstr('setaf'), foreground).decode("utf-8") + \
@@ -17,6 +21,6 @@ if os.name == "posix":
 
 else:
 
-    def color(foreground, text):
-        return text
+    CLEAR_SCR = ""
 
+    color = lambda _, text: text

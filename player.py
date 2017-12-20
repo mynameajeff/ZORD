@@ -1,8 +1,8 @@
 
-import random
-
 from helper_functions import *
 import item
+
+import random
 
 class Player:
 
@@ -14,37 +14,42 @@ class Player:
         HP_MAX = 25
         SP_MAX = 15
 
+        STAMINA = 10
+
         if player_class == color(5, "MAGE"):
-            spm = 5
-            sta = 0
+            SP_MAX += 5
 
         elif player_class == color(9, "WARRIOR"):
-            sta = 5
-            spm = 0
+            STAMINA += 5
 
         self.hp = [random.randint(5, HP_MAX), HP_MAX]
-        self.sp = [random.randint(5, SP_MAX + spm), SP_MAX + spm]
+        self.sp = [random.randint(5, SP_MAX), SP_MAX]
         
         self.xp = (0, 25)
         self.level = 0
 
-        self.st = (10 + sta, 10 + sta)
+        self.st = (STAMINA, STAMINA)
 
         self.equipped = None
 
         self.inventory = [item.Item("Bread")]
 
+    def set_eq_weapon(self, new_item_tuple):
+        self.equipped = new_item_tuple
+
+        print("You equip the {}.".format(self.equipped[1].name))
+
     def get_stats(self):
 
-        print("\033c") # this clears the screen.
+        print(CLEAR_SCR)
 
-        print("NAME: \"%s the %s\", LVL: %d" %
+        print(" NAME: \"%s the %s\", LVL: %d" %
             (self.name, self.player_class, self.level))
 
-        print("HP:   %.2d/%d, XP: %d/%d" %
+        print(" HP:   %.2d/%d, XP: %d/%d" %
             (self.hp[0], self.hp[1], self.xp[0], self.xp[1]))
 
-        print("SP:   %.2d/%d, ST: %d/%d" %
+        print(" SP:   %.2d/%d, ST: %d/%d" %
             (self.sp[0], self.sp[1], self.st[0], self.st[1]))
 
     def get_inventory(self):
@@ -54,13 +59,17 @@ class Player:
 
         if inv_len >= 1:
 
-            return_value = "\033c\n%s:\n" % inv
+            return_value = CLEAR_SCR + "\n%s:\n" % inv
 
             i = 0
 
             while i < inv_len:
 
-                return_value += ("· [%s] %s\n" % (color(3, str(i)), self.inventory[i].name))
+                return_value += ("· [{}] {}\n".format(
+                    color(3, str(i)), 
+                    self.inventory[i].name
+                    )
+                )
 
                 i += 1
 
