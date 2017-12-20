@@ -11,7 +11,6 @@ def get_character():
         name = input("\nWhat's your name? (MAX 20 CHARACTERS)\n> ")
 
         if 20 < len(name) or len(name) == 0:
-
             print("Invalid name.")
 
         else:
@@ -21,10 +20,10 @@ def get_character():
 
     while getting_class:
 
-        pclass = input("\nDo you wish to be a %s, or a %s?\n> " %
-            (color(5, "MAGE"), color(9, "WARRIOR"))).upper()
+        pclass = input("\nDo you wish to be a {}, or a {}?\n> "
+            .format(color(5, "MAGE"), color(9, "WARRIOR"))).upper()
 
-        if pclass in ["MAGE", "WARRIOR"]:
+        if pclass in ("MAGE", "WARRIOR"):
 
             if pclass == "MAGE":
                 color_num = 5
@@ -39,7 +38,7 @@ def get_character():
             playerc_retval.inventory.insert(0, item.Item(default_weapon))
             playerc_retval.inventory.insert(1, item.Item("BASIC Short-Sword")) #just for testing purposes.
 
-            playerc_retval.equipped = (0, playerc_retval.inventory[0]) #(index, item)
+            playerc_retval.set_eq_weapon((0, playerc_retval.inventory[0])) #(index, item)
 
             getting_class = False
 
