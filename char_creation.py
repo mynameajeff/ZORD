@@ -38,7 +38,7 @@ def get_character():
             playerc_retval.inventory.insert(0, item.Item(default_weapon))
             playerc_retval.inventory.insert(1, item.Item("BASIC Short-Sword")) #just for testing purposes.
 
-            playerc_retval.set_eq_weapon((0, playerc_retval.inventory[0])) #(index, item)
+            playerc_retval.equipped = (0, playerc_retval.inventory[0]) #(index, item)
 
             getting_class = False
 
