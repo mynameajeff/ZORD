@@ -1,16 +1,15 @@
 
-import sys
-
 from helper_functions import *
 import char_creation, item
+
+import sys
 
 def check_choice_wl(player_inst):
 
     print(player_inst.get_inventory())
 
     text = "\nEnter the number of the item you wish to interact with, \
-            \nOr you could type %s to exit the %s." %  \
-        (color(1, "EXIT"), color(4, "INVENTORY"))
+            \nOr you could type %s to exit the inventory." % color(1, "EXIT")
 
     print(text, end = "")
 
@@ -30,7 +29,7 @@ def check_choice_wl(player_inst):
             
             if -1 < cc_num < len(player_inst.inventory):
 
-                print("\n%s" % player_inst.inventory[cc_num].description)
+                print("\n%s" % player_inst.inventory[cc_num].description, end = "")
                 cont = item.do_something_with_item(cc_num, player_inst)
 
                 if cont == -1:
@@ -44,6 +43,36 @@ def check_choice_wl(player_inst):
 
         else:
             print("Invalid.")
+
+
+def wloop_1():
+
+    player_instance = char_creation.get_character()
+
+    while True:
+
+        player_instance.get_stats()
+
+        print("\nDo you want to %s for supplies, %s monsters, %s around you, or %s your inventory?" %
+            (color(2, "SCAVENGE"), color(1, "HUNT"), color(3, "LOOK"), color(4, "CHECK")), end = "")
+
+        choice_1 = input("\n> ").upper()
+
+        if choice_1 == "SCAVENGE":
+            pass
+
+        elif choice_1 == "HUNT":
+            pass
+
+        elif choice_1 == "LOOK":
+            pass
+
+        elif choice_1 == "CHECK":
+            
+            check_choice_wl(player_instance)
+
+        elif choice_1 == "EXIT":
+            break
 
 
 def wloop_0():
@@ -76,36 +105,6 @@ def wloop_0():
 
         else:
             print("incorrect choice.")
-
-
-def wloop_1():
-
-    player_instance = char_creation.get_character()
-
-    while True:
-
-        player_instance.get_stats()
-
-        print("\nDo you want to %s for supplies, %s monsters, %s around you, or %s your inventory?" %
-            (color(2, "SCAVENGE"), color(1, "HUNT"), color(3, "LOOK"), color(4, "CHECK")), end = "")
-
-        choice_1 = input("\n> ").upper()
-
-        if choice_1 == "SCAVENGE":
-            pass
-
-        elif choice_1 == "HUNT":
-            pass
-
-        elif choice_1 == "LOOK":
-            pass
-
-        elif choice_1 == "CHECK":
-            
-            check_choice_wl(player_instance)
-
-        elif choice_1 == "EXIT":
-            break
 
 
 def create_screen():
