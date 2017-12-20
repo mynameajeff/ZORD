@@ -1,19 +1,39 @@
 
 {
 
-  "Bread" : 
-    { "desc" : "Food made of flour, water, and yeast mixed together and baked.\n\t+10 HP.",
+  "Stale Bread" : 
+    { "desc" : "Bread that has been kept for too long; It is hard and rather tasteless.",
       "type" : "FOOD",
-      "rehp" : 10
+      "hp-gained" : 4
+    },
+
+  "Bread" : 
+    { "desc" : "Food made of flour, water, and yeast mixed together and baked.",
+      "type" : "FOOD",
+      "hp-gained" : 10
     },
 
   "BASIC Weak-Wand" : 
-    { "desc" : "The Beginning %s's magical weapon of choice.",
-      "type" : "WEAPON"
+    { "desc" : "The Beginning {}'s magical weapon of choice.",
+      "type" : "WEAPON",
+      "stats" : 
+        { "attack-range" : "medium",
+          "damage-normal" : 3,
+          "damage-crit" : 7,
+          "hit-chance" : 54,
+          "crit-chance" : 5
+        }
     },
 
   "BASIC Short-Sword" : 
-    { "desc" : "The Beginning %s's sharp weapon of choice.",
-      "type" : "WEAPON"
+    { "desc" : "The Beginning {}'s sharp weapon of choice.",
+      "type" : "WEAPON",
+      "stats" :
+        { "attack-range" : "short",
+          "damage-normal" : 4,
+          "damage-crit" : 9,
+          "hit-chance" : 67,
+          "crit-chance" : 6
+        }
     }
 }
