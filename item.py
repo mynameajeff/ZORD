@@ -1,5 +1,6 @@
 
 from helper_functions import *
+from item_handlers import *
 import json
 
 with open("MINVENTORY.json") as file:
@@ -9,8 +10,8 @@ with open("MINVENTORY.json") as file:
     w0 = MASTER_INVENTORY["BASIC Weak-Wand"]
     w1 = MASTER_INVENTORY["BASIC Short-Sword"]
 
-    w0["desc"] = w0["desc"] % color(5, "MAGE")
-    w1["desc"] = w1["desc"] % color(9, "WARRIOR")
+    w0["desc"] = w0["desc"].format(color(5, "MAGE"))
+    w1["desc"] = w1["desc"].format(color(9, "WARRIOR"))
 
 class Item:
 
@@ -21,7 +22,7 @@ class Item:
         Item.classno += 1
 
         try:
-            self.type = MASTER_INVENTORY[name]["type"]
+            self.type = MASTER_INVENTORY[name]["type"].upper()
         except KeyError:
             raise SyntaxError("Invalid name of Item '%s' given to Item #%d" % (name, Item.classno))
 
@@ -31,56 +32,21 @@ class Item:
         if self.type == "FOOD":
 
             # this is the amount of health gained from EATing it.
-            self.hp_gain = MASTER_INVENTORY[name]["rehp"]
+            self.hp_gain = MASTER_INVENTORY[name]["hp-gained"]
 
+            self.item_stats = "\n\t+{} HP.".format(MASTER_INVENTORY[name]["hp-gained"])
 
-def food_item_handle(item_obj, player_inst):
-    #deal with food items
+        elif self.type == "WEAPON":
 
-    local_hp_gain = item_obj.hp_gain
+            stats = MASTER_INVENTORY[name]["stats"]
 
-    food_choice = input("Do you want to %s this, or %s?\n-> " %
-        (color(2, "EAT"), color(1, "EXIT"))).upper()
+            self.item_stats = "\n\tNORMAL DMG: {},   CRIT DMG: {} \
+                    \n\tHIT CHANCE: {}%, CRIT CHANCE: {}% \
+                    \n\tRANGE: {}".format(
 
-    if food_choice == "EAT":
-
-        if (player_inst.hp[0] + local_hp_gain) > player_inst.hp[1]:
-            player_inst.hp[0] = player_inst.hp[1]
-
-        else:
-            player_inst.hp[0] += local_hp_gain
-
-        return 0
-
-    elif food_choice == "EXIT":
-        return -1
-
-def weapon_item_handle(item_index, player_inst):
-
-    weapon_equipped = (player_inst.equipped[0], player_inst.equipped[1].name)
-
-    weapon_in_inv = player_inst.inventory[weapon_equipped[0]].name
-
-    if weapon_equipped[0] == item_index and weapon_equipped[1] == weapon_in_inv:
-        print("This WEAPON is equipped.")
-
-    else:
-        print("This WEAPON is not equipped.")
-
-def do_something_with_item(item_index, player_inst):
-
-    item_obj = player_inst.inventory[item_index]
-
-    if item_obj.type == "FOOD": #deal with food items being used
-        ret_val = food_item_handle(item_obj, player_inst)
-
-        if ret_val == 0:
-            del player_inst.inventory[item_index]
-            print("You consume the item.")
-
-    elif item_obj.type == "WEAPON": #deal with weapon items being used
-        weapon_item_handle(item_index, player_inst)
-
-    else:
-        print("Invalid type for item given.\n<do_something_with_item>")
-        return 0
+                stats["damage-normal"],
+                stats["damage-crit"],
+                stats["hit-chance"],
+                stats["crit-chance"],
+                stats["attack-range"],
+            )
