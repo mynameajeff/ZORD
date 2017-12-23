@@ -22,6 +22,8 @@ This has only been tested on Linux(Ubuntu 16.04.2), with xterm, Terminator and g
             [·] FOOD Items now age, meaning they eventually go bad,
                 in some cases making them completely inedible/poisonous.
 
+            [·] Add SAVE/LOAD system for players, 
+                incase they want to leave the game now and come back later.
 
         LONG-TERM GOALS:
 
